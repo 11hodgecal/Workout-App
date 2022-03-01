@@ -1,0 +1,27 @@
+.form-space{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+body{
+    background-color: #292828 !important;
+    font-family:Arial, Helvetica, sans-serif !important;
+}
+label{
+    color: #FFD76F;
+}
+h1{
+    color: #FFD76F;
+}
+#goldtxt{
+    color: #FFD76F !important;
+}
+
+.bg-black{
+    background-color: #121212 !important;
+}
+.btn-gold{
+    color: #FFD76F !important;
+    background-color: #121212 !important;
+    border-color: #121212;
+}
