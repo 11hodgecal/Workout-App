@@ -7,6 +7,11 @@ body{
     background-color: #292828 !important;
     font-family:Arial, Helvetica, sans-serif !important;
 }
+.space{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 label{
     color: #FFD76F;
 }
@@ -20,8 +25,15 @@ h1{
 .bg-black{
     background-color: #121212 !important;
 }
+
 .btn-gold{
     color: #FFD76F !important;
     background-color: #121212 !important;
+    border-color: #121212;
+}
+
+.btn-gold-inverse{
+    color: #121212 !important;
+    background-color: #FFD76F !important;
     border-color: #121212;
 }

@@ -16,7 +16,7 @@
 
     <title>WorkoutCrud</title>
   </head>
-  <body onload="NavCheck();Greeting();">
+  <body onload="NavCheck();Greeting();GetUserWorkouts();">
     <nav class="navbar navbar-expand-lg navbar-dark bg-black">
       <div class="container-fluid">
         <a class="navbar-brand" id ="goldtxt" >Workout Planner</a>
@@ -29,8 +29,11 @@
         </div>
       </div>
     </nav>
-    <h1 id="Greeting"></h1>
-
+    <h1 class = "text-center" id="Greeting"></h1>
+    <div id="workouts" class="container">
+      
+    </div>
+    
 
     <!-- Optional JavaScript; choose one of the two! -->
     <script src="NavJs/Nav.js"></script>
