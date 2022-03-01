@@ -25,6 +25,8 @@ frmLogin.onsubmit = async function (e) {
     // if the response was successful save the token and the users id and role then go the the workout 
     if (response.status == 200) {
         window.localStorage.setItem('token', result.token)
+        window.localStorage.setItem('Fname', result.firstName)
+        window.localStorage.setItem('Sname', result.lastName)
         window.localStorage.setItem('id', result.id)
         window.localStorage.setItem('role', result.role)
         window.location.href= "./WorkoutIndex.html"
