@@ -56,7 +56,7 @@ async function Delete(clicked_id)// the id will be provided by the delete button
 async function Edit(clicked_id)
 {
     //stores the id to local storage
-    window.localStorage.setItem('ForwardID', clicked_id)
+    window.sessionStorage.setItem('ForwardID', clicked_id)
     window.location.href ="Edit.html"
 }
 

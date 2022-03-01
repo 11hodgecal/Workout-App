@@ -23,17 +23,32 @@ h1{
 }
 
 .bg-black{
-    background-color: #121212 !important;
+    background-color: #000000 !important;
+}
+.bg-WorkoutItem{
+    background-color: #161616 !important;
 }
 
 .btn-gold{
     color: #FFD76F !important;
     background-color: #121212 !important;
-    border-color: #121212;
+    border-color: #000000;
 }
 
 .btn-gold-inverse{
-    color: #121212 !important;
+    color: #000000 !important;
     background-color: #FFD76F !important;
     border-color: #121212;
+}
+.Workout-Title{
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top-right-radius: 10px ;
+    border-top-left-radius: 10px ;
+    box-shadow: 0px 0px 5px 5px;
 }
