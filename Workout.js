@@ -49,6 +49,37 @@ async function Workoutload(){
     title = `${result.name} Workout`
     document.getElementById("title").innerHTML = title
     
-    
+    //gets all workout items from the current workout
+    let response2 = await fetch(`https://localhost:7267/api/WorkoutItems/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    //gets the json result
+    let workoutitems = await response2.json()
+
+    //displays all the results depending on the type
+    for (i = 0; i < workoutitems.length; i++){
+
+
+        if(workoutitems[i].type == "Flexibility"){
+            document.getElementById("workoutitems").innerHTML +=`<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].seconds +" "} Seconds</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+        }
+        if(workoutitems[i].type == "Strength"){
+            //if the strength exercise includes weight display it
+            var weighttxt = ""
+            if(workoutitems[i].weight != 0){
+                weighttxt = ` Kg: ${workoutitems[i].weight}`
+            }
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">Sets:${workoutitems[i].sets +"   "} Reps:${workoutitems[i].reps + weighttxt}  </p><button id="${workoutitems[i].id}" class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+        }
+        if(workoutitems[i].type == "Endurance"){
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].minuites +" "}Minutes</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+        }
+        
+        
+        
+    }
 
 }
