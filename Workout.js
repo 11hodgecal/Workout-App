@@ -16,21 +16,14 @@ async function GetUserWorkouts(){
         }
     })
     //gets the response
-    let result = await response.json()
-    // puts the workouts into a objects
-    var userworkouts =  Object.values(result)
-
+    let userworkouts = await response.json()
     //delete all workouts from the array that are not the current users
     for (i = 0; i < userworkouts.length; i++){
-        if(userworkouts[i].userid != Userid){
-            userworkouts.splice(i)
+        if(userworkouts[i].userid == Userid){
+            document.getElementById("workouts").innerHTML += `<div class="card bg-WorkoutItem text-center space" ><div class="card-body "><h5 id ="goldtxt" class="card-title ">${userworkouts[i].name}</h5><a id="${userworkouts[i].id}" onclick="Getworkout(this.id)" class="btn  btn-gold-inverse">View Workout</a></div></div>`
         }
     }
 
-    //displays the users workouts
-    for (i = 0; i < userworkouts.length; i++){
-        document.getElementById("workouts").innerHTML += `<div class="card bg-WorkoutItem text-center space" ><div class="card-body "><h5 id ="goldtxt" class="card-title ">${userworkouts[i].name}</h5><a id="${userworkouts[i].id}" onclick="Getworkout(this.id)" class="btn  btn-gold-inverse">View Workout</a></div></div>`
-    }
 }
 //forwards id onto workout view then goes to it
 function Getworkout(clicked_id){
@@ -55,7 +48,7 @@ async function Workoutload(){
     //display title text
     title = `${result.name} Workout`
     document.getElementById("title").innerHTML = title
-
+    
     
 
 }
