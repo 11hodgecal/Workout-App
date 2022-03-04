@@ -64,7 +64,7 @@ async function Workoutload(){
 
 
         if(workoutitems[i].type == "Flexibility"){
-            document.getElementById("workoutitems").innerHTML +=`<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].seconds +" "} Seconds</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML +=`<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].seconds +" "} Seconds</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
         if(workoutitems[i].type == "Strength"){
             //if the strength exercise includes weight display it
@@ -72,14 +72,31 @@ async function Workoutload(){
             if(workoutitems[i].weight != 0){
                 weighttxt = ` Kg: ${workoutitems[i].weight}`
             }
-            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">Sets:${workoutitems[i].sets +"   "} Reps:${workoutitems[i].reps + weighttxt}  </p><button id="${workoutitems[i].id}" class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">Sets:${workoutitems[i].sets +"   "} Reps:${workoutitems[i].reps + weighttxt}  </p><button id="${workoutitems[i].id}" class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
         if(workoutitems[i].type == "Endurance"){
-            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].minuites +" "}Minutes</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].minuites +" "}Minutes</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)"  class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
         
         
         
     }
 
+}
+
+//allows the user to delete a exercise item
+async function Delete(clicked_id){
+    //tells the server the workout item needs to be deleted
+    let response = await fetch(`https://localhost:7267/api/WorkoutItems/${clicked_id}`, {
+        method: 'Delete',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    //if successfull reloads the page so the deleted workout item cannot be seen in the frontend
+    if (response.status == 204) {
+        window.location.reload()
+    } else {
+        console.log("Delete request was unsuccessful")
+    }
 }
