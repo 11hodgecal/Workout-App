@@ -110,12 +110,12 @@ async function GenerateCreateForm(sel) {
     if (selected == '') {
         document.getElementById("form").innerHTML = `<label for="inputtype" class="col-sm-2 col-form-label">Type:</label><div class="col-sm-10"><select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select" aria-label="Default select example"><option selected value=""></option><option value="Endurance">Endurance</option><option value="Strength">Strength</option><option value="Flexibility">Flexibility</option></select><div class="col-sm-10">`
         document.getElementById("WorkoutItemVars").innerHTML = `<a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
-    } 
+    }
     //if a type is selected it will generate a form for the user
-    if(selected != '') {
+    if (selected != '') {
         //dropdown items
         var dropdownitems = `<option value=""></option>`
-        
+
         //requests for 
         let response = await fetch(`https://localhost:7267/api/activities`, {
             method: 'GET',
@@ -125,7 +125,7 @@ async function GenerateCreateForm(sel) {
         })
         //puts the results into a variable
         let exercises = await response.json()
-        
+
         //loops through all the exercises and if the exercise type equals the selected 
         //then will create a select item for the exercise select
         for (i = 0; i < exercises.length; i++) {
@@ -136,25 +136,136 @@ async function GenerateCreateForm(sel) {
         }
         //depending on the type selected the form inputs other then the above will 
         //dependent for example endurance will be the only one with minuite input
-        var inputs =""
-        for (i = 0; i < exercises.length; i++){
-            if(selected == "Flexibility"){
+        var inputs = ""
+        for (i = 0; i < exercises.length; i++) {
+            if (selected == "Flexibility") {
                 inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Seconds:</label><div class="col-sm-10"><input type="number" class="form-control" id="Seconds" name="Seconds" /></div></div>`
             }
-            if(selected == "Strength"){
+            if (selected == "Strength") {
                 inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Sets:</label><div class="col-sm-10"><input type="number" class="form-control" id="Sets" name="Sets" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Reps:</label><div class="col-sm-10"><input type="number" class="form-control" id="Reps" name="Reps" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Weight(Kg):</label><div class="col-sm-10"><input type="number" class="form-control" id="weight" name="weight" /></div></div>`
             }
-            if(selected == "Endurance"){
+            if (selected == "Endurance") {
                 inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Minuites:</label><div class="col-sm-10"><input type="number" class="form-control" id="Minuites" name="Minuites" /></div></div>`
             }
         }
         //displays the exercise dropdown
         document.getElementById("form").innerHTML = `<input type="hidden"  name="workoutID" value="${id}"><label for="inputtype" class="col-sm-2 col-form-label">Type:</label><div class="col-sm-10"><select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select" aria-label="Default select example"><option selected value=""></option><option value="Endurance">Endurance</option><option value="Strength">Strength</option><option value="Flexibility">Flexibility</option></select><label for="inputtype" class="col-sm-2 col-form-label">Exercise:</label><div class="col-sm-10"><select  name="Name" id="inputName" class="form-select" aria-label="Default select example">${dropdownitems}</select>`
         //diplays the type dependant inputs
-        document.getElementById("WorkoutItemVars").innerHTML = inputs+`<button type="submit"  class="btn btn-gold">Create</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
+        document.getElementById("WorkoutItemVars").innerHTML = inputs + `<button type="submit"  class="btn btn-gold">Create</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
         //makes the selected the type value;
         document.getElementById("inputtype").value = selected
     }
 
+
+}
+
+//creates a new exercise item
+CreateWItem.onsubmit = async function (e) {
+    e.preventDefault()
+    //sets the form data as a variable
+    let formData = new FormData(CreateWItem)
+    let data = {}
+    formData.forEach((value, key) => {
+        data[key] = value;
+
+    })
+    //validates the data
+    let passed = validateitem(data)
+    let valmessage = validatemessage(data)
+    
+    //the api call can be made if the validation check passes
+    if (passed == true) {
+        //Makes the api call to create the workout item
+        let response = await fetch('https://localhost:7267/api/WorkoutItems', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        //redirect the the view to the front end if successful
+        if (response.status != 400) {
+            window.location.href = "WorkoutView.html"
+        }
+        //tell the user to select a exercise if they have not
+        if (response.status == 400) {
+
+            //show errors
+            document.getElementById("error-msg").style.removeProperty("visibility")
+            document.getElementById("error-msg").style.visibility = true
+            document.getElementById("error-msg").innerHTML = "Select a Exercise"
+        }
+    }
+    //if it fails validation show the errors
+    if (passed == false) {
+        
+        //show errors
+        document.getElementById("error-msg").style.removeProperty("visibility")
+        document.getElementById("error-msg").style.visibility = true
+        document.getElementById("error-msg").innerHTML = valmessage
+        
+    }
+
+
+
+}
+
+//validation boolean
+function validateitem(data) {
+    var invalid = false
+
+    if (parseInt(data["Minuites"]) > 60) {
+        invalid = true
+    }
+    if (parseInt(data["Sets"]) > 10) {
+        invalid = true
+    }
+    if (parseInt(data["weight"]) > 250) {
+        invalid = true
+    }
+    if (parseInt(data["Reps"]) > 30) {
+        invalid = true
+    }
+    if (parseInt(data["Seconds"]) > 60) {
+        invalid = true
+    }
+    if (invalid == false) {
+        return true
+    }
+    if (invalid == true) {
+        return false
+    }
+
+}
+
+//validation messages
+function validatemessage(data){
+    var invalid = false
+    var message = ""
+
+    if (parseInt(data["Minuites"]) > 60) {
+        invalid = true
+        message += "Max mins is 60<br>"
+    }
+    if (parseInt(data["Sets"]) > 10) {
+        invalid = true
+        message += "Max Sets is 10<br>"
+    }
+    if (parseInt(data["weight"]) > 250) {
+        invalid = true
+        message += "Max weight is 250kg<br>"
+    }
+    if (parseInt(data["Reps"]) > 30) {
+        invalid = true
+        message += "Max reps is 30kg<br>"
+    }
+    if (parseInt(data["Seconds"]) > 60) {
+        invalid = true
+        message += "Max Seconds is 60<br>"
+    }
+    if (invalid == true) {
+        return message
+    }
+    
 
 }
