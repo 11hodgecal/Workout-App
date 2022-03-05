@@ -50,7 +50,7 @@ async function Workoutload() {
     document.getElementById("title").innerHTML = title
 
     //gets all workout items from the current workout
-    let response2 = await fetch(`https://localhost:7267/api/WorkoutItems/${id}`, {
+    let response2 = await fetch(`https://localhost:7267/api/FindItems/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ async function Workoutload() {
 
 
         if (workoutitems[i].type == "Flexibility") {
-            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].seconds +" "} Seconds</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].seconds +" "} Seconds</p><button onclick="Edit(this.id)" id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
         if (workoutitems[i].type == "Strength") {
             //if the strength exercise includes weight display it
@@ -72,10 +72,10 @@ async function Workoutload() {
             if (workoutitems[i].weight != 0) {
                 weighttxt = ` Kg: ${workoutitems[i].weight}`
             }
-            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">Sets:${workoutitems[i].sets +"   "} Reps:${workoutitems[i].reps + weighttxt}  </p><button id="${workoutitems[i].id}" class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">Sets:${workoutitems[i].sets +"   "} Reps:${workoutitems[i].reps + weighttxt}  </p><button  onclick="Edit(this.id)" id="${workoutitems[i].id}" class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)" class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
         if (workoutitems[i].type == "Endurance") {
-            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].minuites +" "}Minutes</p><button id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)"  class="btn btn-gold-inverse ">Delete</button></div></div>`
+            document.getElementById("workoutitems").innerHTML += `<div class="card  bg-WorkoutItem space"><div class="card-body "><h4 id="goldtxt" class="card-title ">${workoutitems[i].name}</h4><p id="silvertxt">${workoutitems[i].minuites +" "}Minutes</p><button onclick="Edit(this.id)" id="${workoutitems[i].id}"  class="btn btn-gold-inverse ">Edit</button><button id="${workoutitems[i].id}" onclick="Delete(this.id)"  class="btn btn-gold-inverse ">Delete</button></div></div>`
         }
 
 
@@ -83,7 +83,6 @@ async function Workoutload() {
     }
 
 }
-
 //allows the user to delete a exercise item
 async function Delete(clicked_id) {
     //tells the server the workout item needs to be deleted
@@ -158,7 +157,6 @@ async function GenerateCreateForm(sel) {
 
 
 }
-
 //creates a new exercise item
 CreateWItem.onsubmit = async function (e) {
     e.preventDefault()
@@ -172,7 +170,7 @@ CreateWItem.onsubmit = async function (e) {
     //validates the data
     let passed = validateitem(data)
     let valmessage = validatemessage(data)
-    
+
     //the api call can be made if the validation check passes
     if (passed == true) {
         //Makes the api call to create the workout item
@@ -198,17 +196,24 @@ CreateWItem.onsubmit = async function (e) {
     }
     //if it fails validation show the errors
     if (passed == false) {
-        
+
         //show errors
         document.getElementById("error-msg").style.removeProperty("visibility")
         document.getElementById("error-msg").style.visibility = true
         document.getElementById("error-msg").innerHTML = valmessage
-        
+
     }
 
 
 
 }
+//edit button 
+function Edit(clicked_id) {
+    //add workoutitemid to storage and got to the item edit page
+    window.sessionStorage.setItem("WorkoutItemID", clicked_id)
+    window.location.href = "WorkoutIndexEdit.html"
+}
+
 
 //validation boolean
 function validateitem(data) {
@@ -229,6 +234,24 @@ function validateitem(data) {
     if (parseInt(data["Seconds"]) > 60) {
         invalid = true
     }
+    if (data["Name"] == "") {
+        invalid = true
+    }
+    if (data["Minuites"] == "") {
+        invalid = true
+    }
+    if (data["Sets"] == "") {
+        invalid = true
+    }
+    if (data["weight"] == "") {
+        invalid = true
+    }
+    if (data["Reps"] == "") {
+        invalid = true
+    }
+    if (data["Seconds"] == "") {
+        invalid = true
+    }
     if (invalid == false) {
         return true
     }
@@ -237,9 +260,8 @@ function validateitem(data) {
     }
 
 }
-
 //validation messages
-function validatemessage(data){
+function validatemessage(data) {
     var invalid = false
     var message = ""
 
@@ -257,15 +279,39 @@ function validatemessage(data){
     }
     if (parseInt(data["Reps"]) > 30) {
         invalid = true
-        message += "Max reps is 30kg<br>"
+        message += "Max reps is 30<br>"
     }
     if (parseInt(data["Seconds"]) > 60) {
         invalid = true
         message += "Max Seconds is 60<br>"
     }
+    if (data["Name"] == "") {
+        invalid = true
+        message += "please select an exercise<br>"
+    }
+    if (data["Minuites"] == "") {
+        invalid = true
+        message += "Minuites cannot be empty type 0 instead<br>"
+    }
+    if (data["Sets"] == "") {
+        invalid = true
+        message += "Sets cannot be empty type 0 instead<br>"
+    }
+    if (data["weight"] == "") {
+        invalid = true
+        message += "Weight cannot be empty type 0 instead<br>"
+    }
+    if (data["Reps"] == "") {
+        invalid = true
+        message += "Reps cannot be empty type 0 instead<br>"
+    }
+    if (data["Seconds"] == "") {
+        invalid = true
+        message += "Seconds cannot be empty type 0 instead<br>"
+    }
     if (invalid == true) {
         return message
     }
-    
+
 
 }
