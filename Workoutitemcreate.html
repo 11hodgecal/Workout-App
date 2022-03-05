@@ -27,23 +27,28 @@
       </div>
     </div>
   </nav>
-  <form id="CreateWItem" class="form-space" action="" method="post">
-    <h1 class="">Create Workout item</h1>
-    <div id ="form" class="mb-3 row">
-      <label for="inputtype" class="col-sm-2 col-form-label">Type:</label>
-      <div class="col-sm-10">
-        <select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select" aria-label="Default select example">
+  <div class ="container col-md-6 col-md-offset-6">
+    <form id="CreateWItem" class="form-space" action="" method="post">
+      <h1 class="">Create Workout item</h1>
+      <div id="form" class="mb-3 row">
+        <label for="inputtype" class="col-sm-2 col-form-label">Type:</label>
+        <div class="">
+          <select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select"
+            aria-label="Default select example">
             <option selected value=""></option>
             <option value="Endurance">Endurance</option>
             <option value="Strength">Strength</option>
             <option value="Flexibility">Flexibility</option>
-        </select>
+          </select>
+        </div>
+        
       </div>
-      
-    </div>
-    <div id = "WorkoutItemVars"></div>
+      <div id="WorkoutItemVars"></div>
+  </div>
+
+  <p class="alert alert-danger m-4" id="error-msg" style="visibility:hidden;"></p>
   </form>
-  <p class="alert alert-danger m-4" id="error-msg" style = "visibility:hidden;"></p>
+
 
   <!-- Optional JavaScript; choose one of the two! -->
   <script src="NavJs/Nav.js"></script>

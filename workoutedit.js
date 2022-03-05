@@ -15,21 +15,21 @@ async function workoutitemLoad() {
     //dependent for example endurance will be the only one with minuite input
     var inputs = ""
     if (item.type == "Flexibility") {
-        inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Seconds:</label><div class="col-sm-10"><input type="number" value="${item.seconds}"  class="form-control" id="Seconds" name="Seconds" /></div></div>`
+        inputs = `<div class="mb-3"><div class=""><label class="col-sm-2 col-form-label">Seconds:</label><input type="number" value="${item.seconds}"  class="form-control" id="Seconds" name="Seconds" /></div></div>`
 
     }
     if (item.type == "Strength") {
-        inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Sets:</label><div class="col-sm-10"><input value="${item.sets}" type="number" class="form-control" id="Sets" name="Sets" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Reps:</label><div class="col-sm-10"><input value="${item.reps}" type="number" class="form-control" id="Reps" name="Reps" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Weight(Kg):</label><div class="col-sm-10"><input value="${item.weight}" type="number" class="form-control" id="weight" name="weight" /></div></div>`
+        inputs = `<div class="mb-3"><label class="col-sm-2 col-form-label">Sets:</label><div class=""><input value="${item.sets}" type="number" class="form-control" id="Sets" name="Sets" /></div></div><div class="mb-3"><label class="col-sm-2 col-form-label">Reps:</label><div class=""><input value="${item.reps}" type="number" class="form-control" id="Reps" name="Reps" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Weight(Kg):</label><div class=""><input value="${item.weight}" type="number" class="form-control" id="weight" name="weight" /></div></div>`
 
 
     }
     if (item.type == "Endurance") {
-        inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Minuites:</label><div class="col-sm-10"><input value="${item.minuites}" type="number" class="form-control" id="Minuites" name="Minuites" /></div></div>`
+        inputs = `<div class="mb-3 "><label class="col-sm-2 col-form-label">Minuites:</label><div class=""><input value="${item.minuites}" type="number" class="form-control" id="Minuites" name="Minuites" /></div></div>`
     }
 
 
     //diplays the type dependant inputs
-    document.getElementById("WorkoutItemVars").innerHTML = inputs + `<button type="submit"  class="btn btn-gold">Edit</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
+    document.getElementById("WorkoutItemVars").innerHTML = inputs + `<button type="submit"  class="btn btn-gold btn-spacing">Edit</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
 
 
 }

@@ -58,6 +58,6 @@ async function EditPage(){
         selected = `"<select name="type" id="inputtype" class="form-select" aria-label="Default select example"><option  value="Endurance">Endurance</option><option value="Strength">Strength</option><option selected  value="Flexibility">Flexibility</option></select>"`
     }
     //the html containing the results name and and selected type as the default values 
-    var editform = `<h1 class="">Edit exercise</h1><div class="mb-3 row"><label class="col-sm-2 col-form-label">Name:</label><div class="col-sm-10"><input type="text" value="${result.name}" class="form-control" id="name" name="name"  /><input type="hidden" class="form-control" value="${id}" id="id" name="id" /></div></div><div class="mb-3 row"><label for="inputtype" class="col-sm-2 col-form-label">Type:</label><div class="col-sm-10">${selected}</div></div>`
+    var editform = `<h1 class="">Edit exercise</h1><div class="mb-3"><label class="col-sm-2 col-form-label">Name:</label><div class=""><input type="text" value="${result.name}" class="form-control" id="name" name="name"  /><input type="hidden" class="form-control" value="${id}" id="id" name="id" /></div></div><div class=""><div class=""><label for="inputtype" class="col-sm-2 col-form-label">Type:</label> ${selected}</div></div>`
     var form = document.getElementById("form").innerHTML = editform //generates the html on the edit page
 }

@@ -138,19 +138,19 @@ async function GenerateCreateForm(sel) {
         var inputs = ""
         for (i = 0; i < exercises.length; i++) {
             if (selected == "Flexibility") {
-                inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Seconds:</label><div class="col-sm-10"><input type="number" class="form-control" id="Seconds" name="Seconds" /></div></div>`
+                inputs = `<div class="mb-3"><label class="col-sm-2 col-form-label">Seconds:</label><div class=""><input type="number" class="form-control" id="Seconds" name="Seconds" /></div></div>`
             }
             if (selected == "Strength") {
-                inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Sets:</label><div class="col-sm-10"><input type="number" class="form-control" id="Sets" name="Sets" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Reps:</label><div class="col-sm-10"><input type="number" class="form-control" id="Reps" name="Reps" /></div></div><div class="mb-3 row"><label class="col-sm-2 col-form-label">Weight(Kg):</label><div class="col-sm-10"><input type="number" class="form-control" id="weight" name="weight" /></div></div>`
+                inputs = `<div class="mb-3"><label class="col-sm-2 col-form-label">Sets:</label><div class=""><input type="number" class="form-control" id="Sets" name="Sets" /></div></div><div class="mb-3"><label class="col-sm-2 col-form-label">Reps:</label><div class=""><input type="number" class="form-control" id="Reps" name="Reps" /></div></div><div class="mb-3"><label class="col-sm-2 col-form-label">Weight(Kg):</label><div class=""><input type="number" class="form-control" id="weight" name="weight" /></div></div>`
             }
             if (selected == "Endurance") {
-                inputs = `<div class="mb-3 row"><label class="col-sm-2 col-form-label">Minuites:</label><div class="col-sm-10"><input type="number" class="form-control" id="Minuites" name="Minuites" /></div></div>`
+                inputs = `<div class="mb-3"><label class="col-sm-2 col-form-label">Minuites:</label><div class=""><input type="number" class="form-control" id="Minuites" name="Minuites" /></div></div>`
             }
         }
         //displays the exercise dropdown
-        document.getElementById("form").innerHTML = `<input type="hidden"  name="workoutID" value="${id}"><label for="inputtype" class="col-sm-2 col-form-label">Type:</label><div class="col-sm-10"><select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select" aria-label="Default select example"><option selected value=""></option><option value="Endurance">Endurance</option><option value="Strength">Strength</option><option value="Flexibility">Flexibility</option></select><label for="inputtype" class="col-sm-2 col-form-label">Exercise:</label><div class="col-sm-10"><select  name="Name" id="inputName" class="form-select" aria-label="Default select example">${dropdownitems}</select>`
+        document.getElementById("form").innerHTML = `<input type="hidden"  name="workoutID" value="${id}"><label for="inputtype" class="col-sm-2 col-form-label">Type:</label><div class=""><select onchange="GenerateCreateForm(this)" name="type" id="inputtype" class="form-select" aria-label="Default select example"><option selected value=""></option><option value="Endurance">Endurance</option><option value="Strength">Strength</option><option value="Flexibility">Flexibility</option></select><label for="inputtype" class="col-sm-2 col-form-label">Exercise:</label><div class=""><select  name="Name" id="inputName" class="form-select" aria-label="Default select example">${dropdownitems}</select>`
         //diplays the type dependant inputs
-        document.getElementById("WorkoutItemVars").innerHTML = inputs + `<button type="submit"  class="btn btn-gold">Create</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
+        document.getElementById("WorkoutItemVars").innerHTML = inputs + `<button type="submit"  class="btn btn-spacing btn-gold">Create</button><a href="WorkoutView.html" type="submit" class="btn btn-gold">back</a>`
         //makes the selected the type value;
         document.getElementById("inputtype").value = selected
     }
