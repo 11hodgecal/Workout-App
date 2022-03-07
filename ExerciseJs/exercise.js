@@ -24,7 +24,7 @@ async function index() {
             Html += `<tr><td id='goldtxt'>${exercises[i].id}</td><td id='goldtxt'>${exercises[i].name}</td><td id='goldtxt'>${exercises[i].type}</td><td><a id="${exercises[i].id}" onClick="Edit(this.id)" class='btn btn-primary btn-spacing'>Edit</a><a id="${exercises[i].id}" onClick="Delete(this.id)" class='btn btn-danger' >Delete</a></td></tr>`
         }
         //displays a table which will include the exercises in the Db
-        items.innerHTML = `<h1 class="">Execise Management</h1><table class='table'><thead><tr><th id='goldtxt'>ID</th><th id='goldtxt'>Name</th><th id='goldtxt'>Type</th><th id='goldtxt'></th><th id='goldtxt'></th></tr><tbody>${Html}</tbody></thead></table><a href="Create.html" type="submit" class="btn btn-gold">+</a>`
+        items.innerHTML = `<h1 class="">Exercise Management</h1><table class='table'><thead><tr><th id='goldtxt'>ID</th><th id='goldtxt'>Name</th><th id='goldtxt'>Type</th><th id='goldtxt'></th><th id='goldtxt'></th></tr><tbody>${Html}</tbody></thead></table><a href="Create.html" type="submit" class="btn btn-gold">+</a>`
         
     } else {
         console.log("Get request was unsuccessful")
