@@ -83,28 +83,13 @@ CreateEx.onsubmit = async function (e) {
     })
 
     //gets the json result
-    let result = await response.json()
     // if it is successfull go back to the index
-    if (response.status == 201) {
+    if (response.status == 500) {
         window.location.href="index.html"
     } else {//displays any errors
         
-        try {
-            var errors = Object.values(result.errors);
-        } catch (error) {
-            var errors = Object.values(result);
-        }
-        
-        
-        var error_messages = ''
+        var error_messages = 'Please enter a exercise name'
 
-        for (i = 0; i < errors.length; i++)
-        {
-            error_messages += errors[i] + '<br />'
-        }
-        if(errors == null){
-            error_messages == "Invalid Log in"
-        }
         document.getElementById("error-msg").style.removeProperty("visibility")
         document.getElementById("error-msg").style.visibility = true
         document.getElementById("error-msg").innerHTML = error_messages
